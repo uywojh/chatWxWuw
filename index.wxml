@@ -1,0 +1,12 @@
+<view>
+    <text>AI智能问答</text>
+    <text>你可以尝试这样提问:附近有什么好吃的? </text>
+    <view>
+        <input class="input" id="message-input" placeholder="输入你想问的问题" name="message-input"/>
+    </view>
+    <view class="viewName" style="background-color:#fbf9fe">
+  <button class="loginBtn" bindtap="loginBtnClick">提交</button>
+</view>
+</view>
+<view id="message-list"></view>
+
