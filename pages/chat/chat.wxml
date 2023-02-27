@@ -1,0 +1,29 @@
+<!--pages/chat.wxml-->
+<view id="chart-page">
+    <view class="search-list pd-10" style="bottom: {{ footerHeight }}px;">
+        <scroll-view scroll-y="true" scroll-into-view="{{index}}" id="scroll">
+            <view class="search-item" wx:for="{{searchList}}" wx:for-item="item" wx:key="timestamp" id="id_{{item.timestamp}}">
+                <view class="enter">
+                    <view class="msg">
+                        <view class="p">
+                            {{item.enter}}
+                        </view>
+                    </view>
+                </view>
+                <view class="callback">
+                    <view class="msg">
+                        <text class="p" user-select="true">{{item.callback}}</text>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+
+    </view>
+    <view class="search-form--bottom footer">
+        <view class="pd-20 form-item">
+            <input data-key='keywords' placeholder="请输入您的问题" class="input" name="keywords" bindinput="onInput" />
+            <view class="sendButton" bindtap='sendMessage'>发送</view>
+        </view>
+
+    </view>
+</view>
