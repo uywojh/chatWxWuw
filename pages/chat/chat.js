@@ -9,6 +9,7 @@ Page({
      */
     data: {
         index: '',
+        listHeight: 600,
         footerHeight: 0,
         keywords: '',
         searchList: [],
@@ -19,7 +20,7 @@ Page({
      */
     onLoad: function (options) {
         this.getFooterHeight();
-
+        
     },
 
     /**
@@ -80,6 +81,7 @@ Page({
             },
             success: (res) => {
                 let timestamp = new Date().valueOf();
+                console.log(res)
                 let searchItem = {
                     timestamp,
                     callback: res,
@@ -99,9 +101,10 @@ Page({
             }
         },true)
     },
-    onInput(e){
+    bindInput(e){
         let key = e.currentTarget.dataset.key,
         value = e.detail.value;
+        console.log(key)
         this.setData({
           [key]:value
         })
@@ -119,7 +122,18 @@ Page({
           })
         })
     },
-
+    getPageListHeight(){
+        
+        let querys = wx.createSelectorQuery();
+        querys.select('.search-list').boundingClientRect()
+        querys.exec((res) => {
+          let item = res[0];
+          // console.log(item)
+          this.setData({
+            listHeight: item ? item.height : 0
+          })
+        })
+    },
     getFooterHeight() {
         let querys = wx.createSelectorQuery();
         querys.select('.footer').boundingClientRect()
@@ -129,6 +143,8 @@ Page({
           this.setData({
             footerHeight: item ? item.height : 0
           })
+
+          this.getPageListHeight();
         })
       
     }
