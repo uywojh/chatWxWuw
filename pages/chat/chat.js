@@ -1,7 +1,8 @@
 // pages/chat.js
 const request = require("../../utils/request");
-
-
+function stringTrim(string){
+    return string.replace(/\n\n/,"")
+}
 Page({
 
     /**
@@ -84,7 +85,7 @@ Page({
                 console.log(res)
                 let searchItem = {
                     timestamp,
-                    callback: res,
+                    callback: stringTrim(res),
                     enter: keywords,
                     code: 200
                 };
@@ -99,12 +100,15 @@ Page({
             error: (error) => {
                 console.log(error)
             }
-        },true)
+        }, {
+            loading: true,
+            message: '检索中,请稍等'
+        })
     },
     bindInput(e){
         let key = e.currentTarget.dataset.key,
         value = e.detail.value;
-        console.log(key)
+        // console.log(key)
         this.setData({
           [key]:value
         })
