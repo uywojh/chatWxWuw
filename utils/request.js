@@ -1,6 +1,9 @@
 const config = require('../config/index.js');
 const {httpUrl,apiVersion} = config;
-const myRequest = (options,loading = true) =>{
+const myRequest = (options,loadigMsgOptions = {
+  loading: true,
+  message: '正在加载,请稍等'
+}) =>{
   try {
     var token = wx.getStorageSync('token')
     request({
@@ -8,13 +11,13 @@ const myRequest = (options,loading = true) =>{
       ...{
         token
       }
-    },loading)
+    },loadigMsgOptions)
   } catch (e) {
     console.log(e)
   }
 }
 
-const request = (options,loading) => {
+const request = (options,loadigMsgOptions) => {
     let {
       method,
       url,
@@ -25,6 +28,7 @@ const request = (options,loading) => {
       complete,
       token,
     } = options;
+    let { loading, message } = loadigMsgOptions;
     //设置默认数据传数格式
     let methonType = (header && header['content-type']) || "application/json";
     let methods = method || 'GET'
@@ -42,7 +46,7 @@ const request = (options,loading) => {
     }
     
     if (wx.request) {
-      if(loading) wx.showLoading();
+      if(loading) wx.showLoading({title: message});
       let header = {
         'content-type': methonType,
         'api-version': apiVersion,
